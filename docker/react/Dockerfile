@@ -1,7 +1,8 @@
 FROM node:16.17-alpine
 
-WORKDIR /app/react
+WORKDIR /react/app
 COPY package*.json ./
 RUN yarn install
 COPY . .
-ENTRYPOINT [ "npm", "start" ]
+RUN npm install --save prop-types
+RUN npm install -g create-react-app

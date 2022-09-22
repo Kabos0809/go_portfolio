@@ -4,18 +4,18 @@ services:
     container_name: go-api
     build:
       context: .
-      dockerfile: ./docker/go/Dockerfile
+      dockerfile: docker/go/Dockerfile
     tty: true
     ports:
       - 8080:8080
     env_file:
-      - ./build/db/.env
+      - ./.env
     depends_on:
       - db
     volumes:
       - type: bind
-        source: .
-        target: /app/go
+        source: ./backend
+        target: /go/app
     networks:
       - go_react_portfolio
 
@@ -23,26 +23,30 @@ services:
     container_name: react-front
     build: 
       context: .
-      dockerfile: ./docker/react/Dockerfile
+      dockerfile: docker/react/Dockerfile
     volumes:
-      - ./:/app/react
-    command: sh -c "cd portfolio && PORT=3001 yarn start"
+      - type: bind
+        source: ./front
+        target: /react/app
+    command: sh -c 'cd frontend && yarn start'
     ports:
       - "3001:3001"
     stdin_open: true
     tty: true
-
+    networks:
+      - go_react_portfolio
+  
   db:
     container_name: db
     build:
       context: .
-      dockerfile: ./docker/mysql/Dockerfile
+      dockerfile: docker/mysql/Dockerfile
     tty: true
     platform: linux/amd64
     ports:
       - 3306:3306
     env_file:
-      - ./build/db/.env
+      - ./.env
     volumes:
       - type: volume
         source: mysql_portfolio_volume
@@ -51,7 +55,7 @@ services:
         source: ./build/db/init
         target: /docker-entrypoint-initdb.d
     networks:
-      - golang_react_portfolio
+      - go_react_portfolio
       
 volumes:
   mysql_portfolio_volume:
