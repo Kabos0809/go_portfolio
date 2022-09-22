@@ -14,4 +14,4 @@ RUN go mod download
 
 ENV GO111MODULE=on
 
-CMD ["air", "-c", ".air.toml"]
+CMD ["go", "run", "main.go"]
