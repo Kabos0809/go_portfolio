@@ -5,8 +5,10 @@ COPY ./backend /go/app
 WORKDIR /go/app
 
 RUN apk update && apk add git
-RUN go get github.com/cosmtrek/air@v1.29.0
+RUN go install github.com/cosmtrek/air@v1.29.0 && \
+  go install github.com/swaggo/swag/cmd/swag@v1.8.0
 
+RUN go mod download
 
 
 

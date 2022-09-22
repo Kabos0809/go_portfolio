@@ -28,9 +28,9 @@ services:
       - type: bind
         source: ./front
         target: /react/app
-    command: sh -c 'cd frontend && yarn start'
+    command: sh -c 'cd front && yarn start'
     ports:
-      - "3001:3001"
+      - "3000:3000"
     stdin_open: true
     tty: true
     networks:
