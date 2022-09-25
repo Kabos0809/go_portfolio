@@ -52,8 +52,12 @@ services:
         source: mysql_portfolio_volume
         target: /var/lib/mysql
       - type: bind
-        source: ./build/db/init
+        source: ./db/init
         target: /docker-entrypoint-initdb.d
+      - type: bind
+        source: ./db/conf
+        target: /etc/mysql/conf.d/my.cnf
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - go_react_portfolio
       

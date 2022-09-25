@@ -10,8 +10,6 @@ RUN go install github.com/cosmtrek/air@v1.29.0 && \
 
 RUN go mod download
 
-
-
 ENV GO111MODULE=on
 
-CMD ["go", "run", "main.go"]
+CMD ["air", "-c", ".air.toml"]
