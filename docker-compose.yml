@@ -38,31 +38,21 @@ services:
   
   db:
     container_name: db
-    build:
-      context: .
-      dockerfile: docker/mysql/Dockerfile
+    image: postgres:13
+    restart: always
     tty: true
     ports:
-      - 3306:3306
+      - 5432:5432
     env_file:
       - ./.env
     volumes:
-      - type: volume
-        source: mysql_portfolio_volume
-        target: /var/lib/mysql
-      - type: bind
-        source: ./db/init
-        target: /docker-entrypoint-initdb.d
-      - type: bind
-        source: ./db/conf
-        target: /etc/mysql/conf.d/my.cnf
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      - postgres_portfolio_volume:/var/lib/postgresql/data
     networks:
       - go_react_portfolio
       
 volumes:
-  mysql_portfolio_volume:
-    name: mysql_portfolio_volume
+  postgres_portfolio_volume:
+    name: postgres_portfolio_volume
 
 networks:
   go_react_portfolio:
