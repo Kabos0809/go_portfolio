@@ -8,21 +8,15 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-    "github.com/gorilla/mux"
 )
 
 func main() {
-    // 1. Routerを作成
-    router := mux.NewRouter().StrictSlash(true)
-    // 2. URLと処理を紐付ける
-    router.HandleFunc("/", home)
-	router.HandleFunc("/check_db", check_cnct_db)
-    // 3. ポートを指定して起動
-    log.Fatal(http.ListenAndServe(":8080", router))
-}
+    router := http.Server{
+		Addr: ":8080"
+	}
 
-func home(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "World")
+	router.HandleFunc("/check_db", check_cnct_db)
+    log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 func check_cnct_db(w http.ResponseWriter, r *http.Request) {
