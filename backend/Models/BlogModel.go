@@ -1,13 +1,14 @@
-package models
+package Models
 
 import "time"
 
 type Blog struct {
-	ID uint `gorm:"prinmaryKey; AUTO_INCREMENT; not null;"`
-	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
-	Category []BlogTag `json:"category" gorm:"foreignKey:BlogID"`
-	Text string `json:"text" gorm:"type: Text; not null;"`
+	ID uint64 `json:"id" gorm:"prinmaryKey; AUTO_INCREMENT; not null;"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime;"`
+	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;"`
+	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
+	Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID"`
+	Text string `json:"text" gorm:"type: Text; not null;"`
 }
 
 type BlogTag struct {
