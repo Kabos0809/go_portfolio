@@ -3,8 +3,10 @@ package Models
 import "gorm.io/gorm"
 
 type ModelInterface interface {
-	GetAllBlogByTag(blog *[]Blog, tag string) error
-	GetAllTag(tags *[]BlogTag) error
+	GetBlogByTag(blog *[]Blog, tag string) error
+	GetAllBlogTag(tags *[]BlogTag) error
+	GetWorkByTag(works *[]Work, tag string) error
+	GetAllWorkTag(tags *[]WorkTag) error
 }
 
 type BlogInterface interface {

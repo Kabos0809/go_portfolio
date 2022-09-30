@@ -24,8 +24,8 @@ func main() {
         panic(err)
     }
     
-    pgs, _ := db.DB()
-    defer pgs.Close()
+    sqlDB, _ := db.DB()
+    defer sqlDB.Close()
 
     err := db.AutoMigrate(&Models.Blog{}, &Models.Work{}, &Models.Contact{})
     if err != nil {

@@ -1,6 +1,7 @@
 package Routes
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/kabos0809/go_portfolio/backend/Models"
