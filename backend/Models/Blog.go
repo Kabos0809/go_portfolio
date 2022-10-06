@@ -48,11 +48,17 @@ func (m Model) UpdateBlog(blog *Blog) error {
 
 func (m Model) DeleteBlog(id uint64) error {
 	tx := m.Db.Begin()
-	if err := tx.Where("id = ?", id).Delete(&Article{}).Error; err != nil {
+	if err := tx.Where("id = ?", id).Delete(&Blog{}).Error; err != nil {
 		tx.Rollback()
 		return err
 	}
 	tx.Commit()
+	return err
+}
+
+func (m Model) IncrementSeeBlog(blog *Blog) error {
+	tx := m.Db.Begin()
+	if err != nil {}
 	return err
 }
 
