@@ -29,9 +29,11 @@ func SetRoutes(controller Models.Model) *gin.Engine {
 			"Authorization",
 		},
 		AllowOrigins: []string{
-			"http://localhost:3030"
+			"http://localhost:3030",
+			"http://kabos-portfolio.com",
 		},
-		MaxAge: 168 * time.Hour,
+
+		AlloCredentials: true,
 	}))
 
 	v1 := e.Group("/v1")
@@ -46,15 +48,17 @@ func SetRoutes(controller Models.Model) *gin.Engine {
 
 	admin := e.Group("/admin")
 	{
-		admin.GET("/home")
-		admin.GET("/contact/list")
-		admin.GET("/contact/detail/:id")
-		admin.POST("/blog/create")
-		admin.PUT("/blog/update/:id")
-		admin.DELETE("/blog/delete/:id")
-		admin.POST("/work/create")
-		admin.PUT("/work/update/:id")
-		admin.DELETE("/work/delete/:id")
+		admin.POST("/login")
+		admin.GET("/home", MiddleWare.CheckJWT())
+		admin.GET("/contact/list", MiddleWare.CheckJWT())
+		admin.GET("/contact/detail/:id", MiddleWare.CheckJWT())
+		admin.POST("/blog/create", MiddleWare.CheckJWT())
+		admin.PUT("/blog/update/:id", MiddleWare.CheckJWT())
+		admin.DELETE("/blog/delete/:id", MiddleWare.CheckJWT())
+		admin.POST("/work/create", MiddleWare.CheckJWT())
+		admin.PUT("/work/update/:id", MiddleWare.CheckJWT())
+		admin.DELETE("/work/delete/:id", MiddleWare.CheckJWT())
+		admin.GET("/refresh", MiddleWare.CheckRefresh())
 	}
 	
 	return e
