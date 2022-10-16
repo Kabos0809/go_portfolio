@@ -2,7 +2,7 @@ package Models
 
 import (
 	"time"
-	"image"
+	//"image"
 )
 
 type Work struct {
@@ -10,7 +10,7 @@ type Work struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime;"`
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;"`
 	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
-	Thumbnail image.Image `json:"thumbnail"`
+	//Thumbnail image.Image `json:"thumbnail"`
 	Tag []WorkTag `json:"tag" gorm:"foreignKey: WorkID"`
 	Text string `json: "text" gorm:"type: Text; not null;"`
 }

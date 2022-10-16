@@ -1,13 +1,9 @@
 package Models
 
-import (
-	"gorm.io/gorm"
-)
-
 func (m Model) GetAllWork() (*[]Work, error) {
 	var work []Work
 	tx := m.Db.Preload("Tag").Begin()
-	r, err := tx.Find(&work).Error
+	err := tx.Find(&work).Error
 	if err != nil {
 		tx.Rollback()
 		return &work, err
@@ -19,13 +15,13 @@ func (m Model) GetAllWork() (*[]Work, error) {
 func (m Model) GetWorkByID(id uint64) (*Work, error) {
 	var work *Work
 	tx := m.Db.Preload("Tag").Begin()
-	r, err := tx.Where("id = ?", id).Find(&work).Error
+	err := tx.Where("id = ?", id).Find(&work).Error
 	if err != nil {
 		tx.Rollback()
-		return &work, err
+		return work, err
 	}
 	tx.Commit()
-	return &work, err
+	return work, err
 }
 
 func (m Model) CreateWork(work *Work) error {
@@ -75,5 +71,5 @@ func (m Model) GetWorkByTag(works *[]Work, tag string) error {
 		return err
 	}
 	tx.Commit()
-	return err
+	return nil
 }

@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/kabos0809/go_portfolio/Models"
+	"github.com/kabos0809/go_portfolio/backend/Models"
 	"github.com/gin-gonic/gin"
 )
 
 //Create Blogs
 func (c BlogController) CreateBlog(ctx *gin.Context) {
-	var blog Moels.Blog
+	var blog Models.Blog
 	if err := ctx.BindJSON(&blog); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "400:Bad request"})
 		return
@@ -59,7 +59,7 @@ func (c BlogController) UpdateBlog(ctx *gin.Context) {
 	r.Title = blog.Title
 	r.Text = blog.Text
 	r.Tag = blog.Tag
-	if err : =c.Model.UpdateBlog(r); err != nil {
+	if err := c.Model.UpdateBlog(r); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
 		ctx.JSON(http.StatusOK, r)
@@ -73,6 +73,6 @@ func (c BlogController) DeleteBlog(ctx *gin.Context) {
 	if err := c.Model.DeleteBlog(idUint); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
-		ctx.JSON(http.StatusOK, gin,H{"id" + id: "was deleted"})
+		ctx.JSON(http.StatusOK, gin.H{"id" + id: "was deleted"})
 	}
 }

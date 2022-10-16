@@ -1,24 +1,19 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
     "gorm.io/driver/postgres"
 	"github.com/gin-gonic/gin"
 
     "github.com/kabos0809/go_portfolio/backend/Models"
     "github.com/kabos0809/go_portfolio/backend/Routes"
-    "github.com/kabos0809/go_portfolio/backend/Controller"
     "github.com/kabos0809/go_portfolio/backend/Config"
 )
 
 func main() {
     gin.SetMode(gin.DebugMode)
 
-    dbconfig := Config.buildDBConfig()
-    dsn := DBUrl(dbconfig)
+    dsn := Config.DBUrl()
     db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
     if err != nil {
         panic(err)
@@ -27,7 +22,7 @@ func main() {
     sqlDB, _ := db.DB()
     defer sqlDB.Close()
 
-    err := db.AutoMigrate(&Models.Blog{}, &Models.Work{}, &Models.Contact{})
+    err = db.AutoMigrate(&Models.Blog{}, &Models.Work{}, &Models.Contact{}, &Models.User{})
     if err != nil {
         panic(err)
     }

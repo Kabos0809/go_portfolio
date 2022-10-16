@@ -20,7 +20,7 @@ type BlogInterface interface {
 	GetBlogByID(id uint64) (*Blog, error)
 	CreateBlog(blog *Blog) error
 	UpdateBlog(blog *Blog) error
-	DeleteBlog(id uint64)
+	DeleteBlog(id uint64) error
 }
 
 type WorkInterface interface {
@@ -35,7 +35,8 @@ type ContactInterface interface {
 	GetAllContact() (*[]Contact, error)
 	GetContactByID(id uint64) (*Contact, error)
 	CreateContact(contact *Contact) error
-	ReadContact(contact *Contact) error
+	ReadContact(id uint64) error
+	DeleteContact(id uint64) error
 }
 
 type Model struct {

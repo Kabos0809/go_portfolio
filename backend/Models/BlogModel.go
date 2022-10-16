@@ -2,16 +2,16 @@ package Models
 
 import (
 	"time"
-	"image"
+	//"image"
 )
 
 type Blog struct {
 	ID uint64 `json:"id" gorm:"prinmaryKey; AUTO_INCREMENT; not null;"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime;"`
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;"`
-	Thumbnail image.Image `json:"thumbnail"`
+	//Thumbnail image.Image `json:"thumbnail"`
 	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
-	Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID"`
+	Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID; default:null;"`
 	Text string `json:"text" gorm:"type: Text; not null;"`
 }
 

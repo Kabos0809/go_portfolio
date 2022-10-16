@@ -11,6 +11,6 @@ type Contact struct {
 	Read bool `json:"read" gorm:"default: false;"`
 }
 
-func (b *Contact) TableName() {
+func (b *Contact) TableName() string {
 	return "contact"
 }

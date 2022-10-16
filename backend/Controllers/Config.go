@@ -1,7 +1,7 @@
 package Controllers
 
 import (
-	"github.com/kabos0809/go_portfolio/Models"
+	"github.com/kabos0809/go_portfolio/backend/Models"
 )
 
 type ModelController struct {
@@ -20,6 +20,6 @@ type ContactController struct {
 	Model Models.ContactInterface
 }
 
-type UesrController struct {
+type UserController struct {
 	Model Models.UserInterface
 }

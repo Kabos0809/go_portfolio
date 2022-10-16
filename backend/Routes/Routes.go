@@ -1,12 +1,12 @@
 package Routes
 
 import (
-	"time"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/kabos0809/go_portfolio/backend/Models"
 	"github.com/kabos0809/go_portfolio/backend/Controllers"
+	"github.com/kabos0809/go_portfolio/backend/MiddleWare"
 )
 
 func SetRoutes(controller Models.Model) *gin.Engine {
@@ -31,10 +31,10 @@ func SetRoutes(controller Models.Model) *gin.Engine {
 		AllowOrigins: []string{
 			"http://localhost:3030",
 			"http://kabos-official.com",
-			"http://kabos-official.net"
+			"http://kabos-official.net",
 		},
 
-		AlloCredentials: true,
+		AllowCredentials: true,
 	}))
 
 	v1 := e.Group("/v1")

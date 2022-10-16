@@ -1,21 +1,17 @@
 package Models
 
-import (
-	"gorm.io/gorm"
-)
-
 func (m Model) GetAllBlog() (*[]Blog, error) {
 	var blogs []Blog
 	tx := m.Db.Preload("Tag").Begin()
-	if err := tx.Find(&article).Error; err != nil {
+	if err := tx.Find(&blogs).Error; err != nil {
 		tx.Rollback()
-		return &article, err
+		return &blogs, err
 	}
 	tx.Commit()
-	return &article, err
+	return &blogs, nil
 }
 
-func (m Model) GetBlogByID() (*Blog, error) {
+func (m Model) GetBlogByID(id uint64) (*Blog, error) {
 	var blog *Blog
 	tx := m.Db.Preload("Tag").Begin()
 	if err := tx.Where("id = ?", id).Find(blog).Error; err != nil {
@@ -23,7 +19,7 @@ func (m Model) GetBlogByID() (*Blog, error) {
 		return blog, err
 	}
 	tx.Commit()
-	return blog, err
+	return blog, nil
 }
 
 func (m Model) CreateBlog(blog *Blog) error {
@@ -33,7 +29,7 @@ func (m Model) CreateBlog(blog *Blog) error {
 		return err
 	}
 	tx.Commit()
-	return err
+	return nil
 }
 
 func (m Model) UpdateBlog(blog *Blog) error {
@@ -43,7 +39,7 @@ func (m Model) UpdateBlog(blog *Blog) error {
 		return err
 	}
 	tx.Commit()
-	return err
+	return nil
 }
 
 func (m Model) DeleteBlog(id uint64) error {
@@ -53,14 +49,14 @@ func (m Model) DeleteBlog(id uint64) error {
 		return err
 	}
 	tx.Commit()
-	return err
+	return nil
 }
 
-func (m Model) IncrementSeeBlog(blog *Blog) error {
-	tx := m.Db.Begin()
-	if err != nil {}
-	return err
-}
+//func (m Model) IncrementSeeBlog(blog *Blog) error {
+//	tx := m.Db.Begin()
+//	if err != nil {}
+//	return err
+//}
 
 func (m Model) GetAllBlogTag(tags *[]BlogTag) error {
 	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
@@ -76,5 +72,5 @@ func (m Model) GetBlogByTag(blogs *[]Blog, tag string) error {
 		return err
 	}
 	tx.Commit()
-	return err
+	return nil
 }

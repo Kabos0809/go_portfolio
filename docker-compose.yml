@@ -46,7 +46,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - postgres_portfolio_volume:/var/lib/postgresql/data
+      - portfolio_volume:/var/lib/postgresql/data
     networks:
       - go_react_portfolio
   
@@ -63,8 +63,8 @@ services:
       - ./docker/redis/data:/data
       
 volumes:
-  postgres_portfolio_volume:
-    name: postgres_portfolio_volume
+  portfolio_volume:
+    name: portfolio_volume
 
 networks:
   go_react_portfolio:

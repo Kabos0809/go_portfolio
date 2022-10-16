@@ -2,6 +2,7 @@ package MiddleWare
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/kabos0809/go_portfolio/backend/Models"
 
@@ -40,7 +41,7 @@ func CheckJWT() gin.HandlerFunc {
 
 func CheckRefresh() gin.HandlerFunc{
 	return func(c *gin.Context) {
-		rtoken, err := request,ParseFromRequest(c.Request, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
+		rtoken, err := request.ParseFromRequest(c.Request, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
 			godotenv.Load(".env")
 			REFRESH_TOKEN_SECRETKEY := os.Getenv("REFRESH_TOKEN_SECRETKEY")
 			b := []byte(REFRESH_TOKEN_SECRETKEY)
@@ -50,7 +51,7 @@ func CheckRefresh() gin.HandlerFunc{
 		if err != nil {
 			if err := Models.CheckBlackList(rtoken.Raw); err == nil {
 				c.JSON(http.StatusBadRequest, gin.H{"err": "Token is invalid"})
-				c.Abrot()
+				c.Abort()
 			} else {
 				rclaims := rtoken.Claims.(jwt.MapClaims)
 				c.Set("exp", rclaims["exp"])

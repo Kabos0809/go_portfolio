@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/kabos0809/go_portfolio/Models"
+	"github.com/kabos0809/go_portfolio/backend/Models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +16,7 @@ func (c WorkController) CreateWork(ctx *gin.Context) {
 		return
 	}
 	if err := c.Model.CreateWork(&work); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"err": "400: Bad request"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{})
 	}
@@ -35,8 +35,8 @@ func (c WorkController) GetWork(ctx *gin.Context) {
 //Fetch Work by ID
 func (c WorkController) GetWorkByID(ctx *gin.Context) {
 	id := ctx.Params.ByName("id")
-	idUint := strconv.ParseUint(id, 10, 64)
-	r, err := c.Model.GetWorkByID(id)
+	idUint, _ := strconv.ParseUint(id, 10, 64)
+	r, err := c.Model.GetWorkByID(idUint)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -51,7 +51,7 @@ func (c WorkController) UpdateWork(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": "400: Bad request"})
 	}
 	id := ctx.Params.ByName("id")
-	idUint := strconv.ParseUint(id, 10, 64)
+	idUint, _ := strconv.ParseUint(id, 10, 64)
 	r, err := c.Model.GetWorkByID(idUint)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
@@ -59,7 +59,7 @@ func (c WorkController) UpdateWork(ctx *gin.Context) {
 	}
 	r.Title = work.Title
 	r.Text = work.Text
-	r.Thumbnail = work.Thumbnail
+	//r.Thumbnail = work.Thumbnail
 	r.Tag = work.Tag
 	if err := c.Model.UpdateWork(r); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
@@ -71,8 +71,8 @@ func (c WorkController) UpdateWork(ctx *gin.Context) {
 //Delete Work
 func (c WorkController) DeleteWork(ctx *gin.Context) {
 	id := ctx.Params.ByName("id")
-	idUint := strconv.ParseUint(id, 10, 64)
-	if err := c.Model.DeleteWork(id); err != nil {
+	idUint, _ := strconv.ParseUint(id, 10, 64)
+	if err := c.Model.DeleteWork(idUint); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{"id" + id: "was deleted"})
