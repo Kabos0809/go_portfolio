@@ -9,6 +9,12 @@ type ModelInterface interface {
 	GetAllWorkTag(tags *[]WorkTag) error
 }
 
+type UserInterface interface {
+	CreateUser(username string, password string) error
+	CheckPassword(username string, password string) error
+	CreateRefresh(id uint64, token string, exp int64) (map[string]string, error)
+}
+
 type BlogInterface interface {
 	GetAllBlog() (*[]Blog, error)
 	GetBlogByID(id uint64) (*Blog, error)

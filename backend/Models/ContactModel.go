@@ -8,7 +8,7 @@ type Contact struct {
 	Subject string `json:"subject" gorm:"size: 50; type: Text; not null;"`
 	Email string `json:"email" gorm:"not null;"`
 	Text string `json:"text" gorm:"size: 20000; type: Text; not null;"`
-	Read bool `json:"read" gorm:"default: true;"`
+	Read bool `json:"read" gorm:"default: false;"`
 }
 
 func (b *Contact) TableName() {
