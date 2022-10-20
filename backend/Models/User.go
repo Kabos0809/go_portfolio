@@ -61,7 +61,7 @@ func CreateJWT(username string, id uint64) (map[string]string, error) {
 
 	return map[string]string{
 		"AccessToken": t,
-		"RefureshToken": rt,
+		"RefreshToken": rt,
 	}, nil
 }
 

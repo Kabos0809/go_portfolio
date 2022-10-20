@@ -58,7 +58,7 @@ func (c UserController) Logout(ctx *gin.Context) {
 
 //Get RefreshToken
 func (c UserController) GetRefresh(ctx *gin.Context) {
-	ID := ctx.MustGet("ID").(float64)
+	ID := ctx.MustGet("id").(float64)
 	rt := ctx.MustGet("RefreshToken").(string)
 	exp := ctx.MustGet("exp").(float64)
 	token, err := c.Model.CreateRefresh(uint64(ID), rt, int64(exp))

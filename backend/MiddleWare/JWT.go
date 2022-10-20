@@ -9,21 +9,19 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-
 )
 
 func CheckJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token, err := request.ParseFromRequest(c.Request, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
-			godotenv.Load(".env")
 			ACCESS_TOKEN_SECRETKEY := os.Getenv("ACCESS_TOKEN_SECRETKEY")
 			b := []byte(ACCESS_TOKEN_SECRETKEY)
 			return b, nil
 		})
 
-		if err != nil {
-			if err := Models.CheckBlackList(token.Raw); err == nil {
+		if err == nil {
+			err := Models.CheckBlackList(token.Raw);
+			if err == nil {
 				c.JSON(http.StatusBadRequest, gin.H{"err": "Token is invalid"})
 				c.Abort()
 			} else {
@@ -42,19 +40,19 @@ func CheckJWT() gin.HandlerFunc {
 func CheckRefresh() gin.HandlerFunc{
 	return func(c *gin.Context) {
 		rtoken, err := request.ParseFromRequest(c.Request, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
-			godotenv.Load(".env")
 			REFRESH_TOKEN_SECRETKEY := os.Getenv("REFRESH_TOKEN_SECRETKEY")
 			b := []byte(REFRESH_TOKEN_SECRETKEY)
 			return b, nil
 		})
 
-		if err != nil {
+		if err == nil {
 			if err := Models.CheckBlackList(rtoken.Raw); err == nil {
 				c.JSON(http.StatusBadRequest, gin.H{"err": "Token is invalid"})
 				c.Abort()
 			} else {
 				rclaims := rtoken.Claims.(jwt.MapClaims)
 				c.Set("exp", rclaims["exp"])
+				c.Set("id", rclaims["id"])
 				c.Set("RefreshToken", rtoken.Raw)
 				c.Next()
 			}

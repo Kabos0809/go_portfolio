@@ -55,12 +55,15 @@ services:
     build:
       context: .
       dockerfile: docker/redis/Dockerfile
+    command: redis-server --appendonly yes
     depends_on:
       - db
     ports:
-      - 6378:6379
+      - 16378:6379
     volumes:
       - ./docker/redis/data:/data
+    networks:
+      - go_react_portfolio
       
 volumes:
   portfolio_volume:
