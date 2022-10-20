@@ -11,19 +11,19 @@ type Work struct {
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;"`
 	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
 	//Thumbnail image.Image `json:"thumbnail"`
-	Tag []WorkTag `json:"tag" gorm:"foreignKey: WorkID"`
+	//Tag []WorkTag `json:"tag" gorm:"foreignKey: WorkID"`
 	Text string `json: "text" gorm:"type: Text; not null;"`
 }
 
-type WorkTag struct {
-	Name string
-	WorkID uint64
-}
+//type WorkTag struct {
+//	Name string
+//	WorkID uint64
+//}
 
 func (b *Work) TableName() string {
 	return "work"
 }
 
-func (b *WorkTag) TableName() string {
-	return "worktag"
-}
+//func (b *WorkTag) TableName() string {
+//	return "worktag"
+//}

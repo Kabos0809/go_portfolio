@@ -11,20 +11,20 @@ type Blog struct {
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoCreateTime;"`
 	//Thumbnail image.Image `json:"thumbnail"`
 	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
-	Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID; default:null;"`
+	//Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID; default:null;"`
 	Text string `json:"text" gorm:"type: Text; not null;"`
 }
 
-type BlogTag struct {
-	Name string
-	BlogID uint64
-}
+//type BlogTag struct {
+//	Name string
+//	BlogID uint64
+//}
 
 func (b *Blog) TableName() string {
 	return "blog"
 }
 
-func (b *BlogTag) TableName() string {
-	return "blogtag"
-}
+//func (b *BlogTag) TableName() string {
+//	return "blogtag"
+//}
 
