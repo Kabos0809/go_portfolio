@@ -7,7 +7,15 @@ func (m Model) GetAllContact() (*[]Contact, error) {
 		tx.Rollback()
 		return nil, err
 	}
-	tx.Commit()
+	f := func(c []Contact) []Contact {
+		l := len(c)
+		for i := 0; i < l/2; i++ {
+			c[i], c[l-i-1] = c[l-i-1], c[i]
+		}
+		return c
+	}
+	contacts = f(contacts)
+ 	tx.Commit()
 	return &contacts, nil
 }
 
