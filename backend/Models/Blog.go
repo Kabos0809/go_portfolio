@@ -2,7 +2,9 @@ package Models
 
 func (m Model) GetAllBlog() (*[]Blog, error) {
 	var blogs []Blog
-	tx := m.Db.Preload("Tag").Begin()
+	//タグに対応できたら使う
+	//tx := m.Db.Preload("Tag").Begin()
+	tx := m.Db.Begin()
 	if err := tx.Find(&blogs).Error; err != nil {
 		tx.Rollback()
 		return &blogs, err
@@ -13,7 +15,9 @@ func (m Model) GetAllBlog() (*[]Blog, error) {
 
 func (m Model) GetBlogByID(id uint64) (*Blog, error) {
 	var blog *Blog
-	tx := m.Db.Preload("Tag").Begin()
+	//同上
+	//tx := m.Db.Preload("Tag").Begin()
+	tx := m.Db.Begin()
 	if err := tx.Where("id = ?", id).Find(blog).Error; err != nil {
 		tx.Rollback()
 		return blog, err
@@ -58,19 +62,19 @@ func (m Model) DeleteBlog(id uint64) error {
 //	return err
 //}
 
-func (m Model) GetAllBlogTag(tags *[]BlogTag) error {
-	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m Model) GetBlogByTag(blogs *[]Blog, tag string) error {
-	tx := m.Db.Preload("Tag").Begin()
-	if err := tx.Joins("inner join blogtag on blog.id = blogtag.blog_id").Where("blogtag.name = ?", tag).Preload("Tag").Find(blogs).Error; err != nil {
-		tx.Rollback()
-		return err
-	}
-	tx.Commit()
-	return nil
-}
+//func (m Model) GetAllBlogTag(tags *[]BlogTag) error {
+//	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
+//		return err
+//	}
+//	return nil
+//}
+//
+//func (m Model) GetBlogByTag(blogs *[]Blog, tag string) error {
+//	tx := m.Db.Preload("Tag").Begin()
+//	if err := tx.Joins("inner join blogtag on blog.id = blogtag.blog_id").Where("blogtag.name = ?", tag).Preload("Tag").Find(blogs).Error; err != nil {
+//		tx.Rollback()
+//		return err
+//	}
+//	tx.Commit()
+//	return nil
+//}

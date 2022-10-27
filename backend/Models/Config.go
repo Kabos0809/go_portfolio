@@ -3,10 +3,10 @@ package Models
 import "gorm.io/gorm"
 
 type ModelInterface interface {
-	GetBlogByTag(blog *[]Blog, tag string) error
-	GetAllBlogTag(tags *[]BlogTag) error
-	GetWorkByTag(works *[]Work, tag string) error
-	GetAllWorkTag(tags *[]WorkTag) error
+	//GetBlogByTag(blog *[]Blog, tag string) error
+	//GetAllBlogTag(tags *[]BlogTag) error
+	//GetWorkByTag(works *[]Work, tag string) error
+	//GetAllWorkTag(tags *[]WorkTag) error
 }
 
 type UserInterface interface {
@@ -35,7 +35,7 @@ type ContactInterface interface {
 	GetAllContact() (*[]Contact, error)
 	GetContactByID(id uint64) (*Contact, error)
 	CreateContact(contact *Contact) error
-	ReadContact(id uint64) error
+	ReadContact(c *Contact) error
 	DeleteContact(id uint64) error
 }
 

@@ -39,7 +39,7 @@ func (c BlogController) GetBlogByID(ctx *gin.Context) {
 	idUint, _ := strconv.ParseUint(id, 10, 64)
 	r, err := c.Model.GetBlogByID(idUint)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"err": "400: Bad request"})
+		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
 		ctx.JSON(http.StatusOK, r)
 	}
@@ -58,7 +58,7 @@ func (c BlogController) UpdateBlog(ctx *gin.Context) {
 	ctx.BindJSON(blog)
 	r.Title = blog.Title
 	r.Text = blog.Text
-	r.Tag = blog.Tag
+	//r.Tag = blog.Tag
 	if err := c.Model.UpdateBlog(r); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {

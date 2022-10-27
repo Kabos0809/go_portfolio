@@ -60,7 +60,7 @@ func (c WorkController) UpdateWork(ctx *gin.Context) {
 	r.Title = work.Title
 	r.Text = work.Text
 	//r.Thumbnail = work.Thumbnail
-	r.Tag = work.Tag
+	//r.Tag = work.Tag
 	if err := c.Model.UpdateWork(r); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -75,6 +75,6 @@ func (c WorkController) DeleteWork(ctx *gin.Context) {
 	if err := c.Model.DeleteWork(idUint); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
-		ctx.JSON(http.StatusOK, gin.H{"id" + id: "was deleted"})
+		ctx.JSON(http.StatusOK, gin.H{"id:" + id: "was deleted"})
 	}
 }

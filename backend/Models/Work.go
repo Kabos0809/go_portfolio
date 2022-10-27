@@ -2,7 +2,9 @@ package Models
 
 func (m Model) GetAllWork() (*[]Work, error) {
 	var work []Work
-	tx := m.Db.Preload("Tag").Begin()
+	//タグに対応できたら使う
+	//tx := m.Db.Preload("Tag").Begin()
+	tx := m.Db.Begin()
 	err := tx.Find(&work).Error
 	if err != nil {
 		tx.Rollback()
@@ -14,7 +16,9 @@ func (m Model) GetAllWork() (*[]Work, error) {
 
 func (m Model) GetWorkByID(id uint64) (*Work, error) {
 	var work *Work
-	tx := m.Db.Preload("Tag").Begin()
+	//同上
+	//tx := m.Db.Preload("Tag").Begin()
+	tx := m.Db.Begin()
 	err := tx.Where("id = ?", id).Find(&work).Error
 	if err != nil {
 		tx.Rollback()
@@ -57,19 +61,19 @@ func (m Model) DeleteWork(id uint64) error {
 	return err
 }
 
-func (m Model) GetAllWorkTag(tags *[]WorkTag) error {
-	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m Model) GetWorkByTag(works *[]Work, tag string) error {
-	tx := m.Db.Preload("Tag").Begin()
-	if err := tx.Joins("inner join worktag on work.id = worktag.work_id").Where("worktag.name = ?", tag).Preload("Tag").Find(works).Error; err != nil {
-		tx.Rollback()
-		return err
-	}
-	tx.Commit()
-	return nil
-}
+//func (m Model) GetAllWorkTag(tags *[]WorkTag) error {
+//	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
+//		return err
+//	}
+//	return nil
+//}
+//
+//func (m Model) GetWorkByTag(works *[]Work, tag string) error {
+//	tx := m.Db.Preload("Tag").Begin()
+//	if err := tx.Joins("inner join worktag on work.id = worktag.work_id").Where("worktag.name = ?", tag).Preload("Tag").Find(works).Error; err != nil {
+//		tx.Rollback()
+//		return err
+//	}
+//	tx.Commit()
+//	return nil
+//}
