@@ -48,19 +48,21 @@ func SetRoutes(controller Models.Model) *gin.Engine {
 
 	admin := e.Group("/admin")
 	{
+		//デプロイ時は/signupは無効に
 		admin.POST("/signup", Controllers.UserController{Model: controller}.SignUp)
 		admin.POST("/login", Controllers.UserController{Model: controller}.Login)
 		admin.GET("/logout", MiddleWare.CheckJWT(), Controllers.UserController{Model: controller}.Logout)
-		admin.GET("/home", MiddleWare.CheckJWT())
 		admin.GET("/contact/list", MiddleWare.CheckJWT(), Controllers.ContactController{Model: controller}.GetContact)
 		admin.GET("/contact/detail/:id", MiddleWare.CheckJWT(), Controllers.ContactController{Model: controller}.GetContactByID)
 		admin.DELETE("/contact/delete/:id", MiddleWare.CheckJWT(), Controllers.ContactController{Model: controller}.DeleteContact)
 		admin.POST("/blog/create", MiddleWare.CheckJWT(), Controllers.BlogController{Model: controller}.CreateBlog)
 		admin.PUT("/blog/update/:id", MiddleWare.CheckJWT(), Controllers.BlogController{Model: controller}.UpdateBlog)
 		admin.DELETE("/blog/delete/:id", MiddleWare.CheckJWT(), Controllers.BlogController{Model: controller}.DeleteBlog)
+		admin.PUT("/blog/changeactive/:id", MiddleWare.CheckJWT(), Controllers.BlogController{Model: controller}.ChangeBlogIsActive)
 		admin.POST("/work/create", MiddleWare.CheckJWT(), Controllers.WorkController{Model: controller}.CreateWork)
 		admin.PUT("/work/update/:id", MiddleWare.CheckJWT(), Controllers.WorkController{Model: controller}.UpdateWork)
 		admin.DELETE("/work/delete/:id", MiddleWare.CheckJWT(), Controllers.WorkController{Model: controller}.DeleteWork)
+		admin.PUT("/work/changeactive/:id", MiddleWare.CheckJWT(), Controllers.WorkController{Model: controller}.ChangeWorkIsActive)
 		admin.GET("/refresh", MiddleWare.CheckRefresh(), Controllers.UserController{Model: controller}.GetRefresh)
 	}
 	

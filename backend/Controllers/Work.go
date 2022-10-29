@@ -39,6 +39,11 @@ func (c WorkController) GetWorkByID(ctx *gin.Context) {
 	r, err := c.Model.GetWorkByID(idUint)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	} 
+	err = c.Model.IncrementSeeWork(r)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusBadRequest)
 	} else {
 		ctx.JSON(http.StatusOK, r)
 	}
@@ -76,5 +81,16 @@ func (c WorkController) DeleteWork(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{"id:" + id: "was deleted"})
+	}
+}
+
+//Change IsActive
+func (c WorkController) ChangeWorkIsActive(ctx *gin.Context) {
+	id := ctx.Params.ByName("id")
+	idUint, _ := strconv.ParseUint(id, 10, 64)
+	if err := c.Model.ChangeWorkIsActive(idUint); err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"id:" + id: "was changed IsActive"})
 	}
 }

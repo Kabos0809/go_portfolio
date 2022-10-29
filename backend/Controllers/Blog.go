@@ -40,6 +40,11 @@ func (c BlogController) GetBlogByID(ctx *gin.Context) {
 	r, err := c.Model.GetBlogByID(idUint)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
+	}
+	err = c.Model.IncrementSeeBlog(r)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	} else {
 		ctx.JSON(http.StatusOK, r)
 	}
@@ -73,6 +78,17 @@ func (c BlogController) DeleteBlog(ctx *gin.Context) {
 	if err := c.Model.DeleteBlog(idUint); err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 	} else {
-		ctx.JSON(http.StatusOK, gin.H{"id" + id: "was deleted"})
+		ctx.JSON(http.StatusOK, gin.H{"id:" + id : "was deleted"})
+	}
+}
+
+//Change IsActive
+func (c BlogController) ChangeBlogIsActive(ctx *gin.Context) {
+	id := ctx.Params.ByName("id")
+	idUint, _ := strconv.ParseUint(id, 10, 64)
+	if err := c.Model.ChangeBlogIsActive(idUint); err != nil {
+		ctx.AbortWithStatus(http.StatusBadRequest)
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"ID:" + id + "'s" : "active was changed"})
 	}
 }

@@ -21,6 +21,8 @@ type BlogInterface interface {
 	CreateBlog(blog *Blog) error
 	UpdateBlog(blog *Blog) error
 	DeleteBlog(id uint64) error
+	IncrementSeeBlog(blog *Blog) error
+	ChangeBlogIsActive(id uint64) error
 }
 
 type WorkInterface interface {
@@ -29,6 +31,8 @@ type WorkInterface interface {
 	CreateWork(work *Work) error
 	UpdateWork(work *Work) error
 	DeleteWork(id uint64) error
+	IncrementSeeWork(work *Work) error
+	ChangeWorkIsActive(id uint64) error
 }
 
 type ContactInterface interface {

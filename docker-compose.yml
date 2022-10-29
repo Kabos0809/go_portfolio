@@ -28,7 +28,7 @@ services:
       - type: bind
         source: ./front
         target: /react/app
-    command: sh -c 'cd front && yarn start'
+    command: sh -c 'yarn start'
     ports:
       - "3000:3000"
     stdin_open: true
@@ -46,7 +46,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - portfolio_volume:/var/lib/postgresql/data
+      - portfolio:/var/lib/postgresql/data
     networks:
       - go_react_portfolio
   
@@ -66,8 +66,8 @@ services:
       - go_react_portfolio
       
 volumes:
-  portfolio_volume:
-    name: portfolio_volume
+  portfolio:
+    name: portfolio
 
 networks:
   go_react_portfolio:

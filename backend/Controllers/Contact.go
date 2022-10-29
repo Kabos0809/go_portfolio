@@ -39,6 +39,7 @@ func (c ContactController) GetContactByID(ctx *gin.Context) {
 	r, err := c.Model.GetContactByID(idUint)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
+		return
 	}
 	err = c.Model.ReadContact(r)
 	if err != nil {

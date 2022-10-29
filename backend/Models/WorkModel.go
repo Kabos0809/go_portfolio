@@ -13,6 +13,8 @@ type Work struct {
 	//Thumbnail image.Image `json:"thumbnail"`
 	//Tag []WorkTag `json:"tag" gorm:"foreignKey: WorkID"`
 	Text string `json: "text" gorm:"type: Text; not null;"`
+	SeeCount uint64 `json:"see_count" gorm:"default: 0; not null;"`
+	IsActive bool `json:"is_active" gorm:"default: true"`
 }
 
 //type WorkTag struct {
