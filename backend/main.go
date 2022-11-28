@@ -22,7 +22,15 @@ func main() {
     sqlDB, _ := db.DB()
     defer sqlDB.Close()
 
-    err = db.AutoMigrate(&Models.Blog{}, &Models.Work{}, &Models.Contact{}, &Models.User{})
+    err = db.AutoMigrate(&Models.Contact{}, &Models.User{})
+    if err != nil {
+        panic(err)
+    }
+    err = db.AutoMigrate(&Models.Blog{})
+    if err != nil {
+        panic(err)
+    }
+    err = db.AutoMigrate(&Models.Work{})
     if err != nil {
         panic(err)
     }

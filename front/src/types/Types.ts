@@ -23,3 +23,7 @@ export type Token = {
     AccessToken: string
     RefreshToken: string
 }
+
+export type Tag = {
+    Name: string
+}

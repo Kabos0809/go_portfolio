@@ -12,20 +12,17 @@ type Blog struct {
 	//Thumbnail image.Image `json:"thumbnail"`
 	SeeCount uint64 `json:"see_count" gorm:"default: 0; not null;"`
 	Title string `json:"title" gorm:"size: 50; type: Text; not null;"`
-	//Tag []BlogTag `json:"tag" gorm:"foreignKey:BlogID; default:[];"`
+	//BlogTags []BlogTag `gorm:"many2many:blog_tags;"`
 	Text string `json:"text" gorm:"type: Text; not null;"`
 	IsActive bool `json:"is_active" gorm:"default: true;"`
 }
 
-//type BlogTag struct {
-//	Name string
-//	BlogID uint64
-//}
+type BlogTag struct {
+	ID uint `json:"id" gorm:"primaryKey; AUTO_INCREMENT; not null;"`
+	Name string `json:"name" gorm:"not null; unique;"`
+	Blogs []Blog `gorm:"many2many:blog_tags;"`
+}
 
 func (b *Blog) TableName() string {
 	return "blog"
 }
-
-//func (b *BlogTag) TableName() string {
-//	return "blogtag"
-//}

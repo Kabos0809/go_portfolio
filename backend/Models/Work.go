@@ -99,7 +99,7 @@ func (m Model) ChangeWorkIsActive(id uint64) error {
 		tx.Commit()
 		return nil
 	}
-} 
+}
 
 //func (m Model) GetAllWorkTag(tags *[]WorkTag) error {
 //	if err := m.Db.Select("name").Group("name").Find(tags).Error; err != nil {
